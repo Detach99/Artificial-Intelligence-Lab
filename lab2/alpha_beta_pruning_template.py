@@ -63,7 +63,13 @@ def get_value(node, alpha, beta):
         You can use max_value and min_value to construct this function.
     """
     # TODO: Begin your code
-    
+    if node.is_leaf:
+        return node.value
+    if node.rule == "max":
+        return max_value(node, alpha, beta)
+    else:
+        return min_value(node, alpha, beta)
+    node.visited = True    
     # TODO: End your code
 
 
@@ -82,6 +88,14 @@ def max_value(node, alpha, beta):
         You can use get_value to construct this function.
     """
     # TODO: Begin your code
+    v = float('-inf')
+    for su in node.successor:
+        v = max(v, get_value(su, alpha, beta))
+        su.visited = True
+        if v >= beta:
+            return v
+        alpha = max(v, alpha) 
+    return v
     # TODO: End your code
 
 
@@ -100,6 +114,14 @@ def min_value(node, alpha, beta):
         You can use get_value to construct this function.
     """
     # TODO: Begin your code
+    v = float('inf')
+    for su in node.successor:
+        v = min(v, get_value(su, alpha, beta))
+        su.visited = True
+        if v <= alpha:
+            return v
+        beta = min(v, beta) 
+    return v
     # TODO: End your code
 
 
